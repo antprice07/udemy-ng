@@ -3,14 +3,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styles: []
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'udemy-ng-project';
-  loadedFeature = 'recipe';
-
-  onNavigate(feature:string){
-      this.loadedFeature = feature;
-
-  }
+  numbers = [1, 2, 3, 4, 5];
+  oddNumbers=[1,3,5];
+  evenNumbers=[2,4];
+  onlyOdd = false;
+  value = 100;
 }
