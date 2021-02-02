@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Elem } from './element.model';
 
 @Component({
   selector: 'app-root',
@@ -6,23 +7,28 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  serverElements = [];
-  newServerName = '';
-  newServerContent = '';
+  serverElements= [{type:'server',name:'TestServer',content:'Just a test!'}];
 
-  onAddServer() {
+  onServerAdded(serverData: {serverName:string, serverContent:string}) {
     this.serverElements.push({
       type: 'server',
-      name: this.newServerName,
-      content: this.newServerContent
+      name: serverData.serverName,
+      content: serverData.serverContent
     });
   }
 
-  onAddBlueprint() {
+  onBlueprintAdded(blueprintData: {serverName:string,serverContent:string}) {
     this.serverElements.push({
       type: 'blueprint',
-      name: this.newServerName,
-      content: this.newServerContent
+      name: blueprintData.serverName,
+      content: blueprintData.serverContent
     });
+  }
+  
+  onChangeFirst(){
+    this.serverElements[0].name = 'changed';
+  }
+  onDestroyFirst(){
+    this.serverElements.splice(0,1);
   }
 }
