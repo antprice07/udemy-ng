@@ -1,4 +1,4 @@
-import { Injectable,EventEmitter } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { Recipe } from './recipe.model';
 
@@ -6,8 +6,6 @@ import { Recipe } from './recipe.model';
   providedIn: 'root'
 })
 export class RecipeService {
-  recipeSelected= new EventEmitter<Recipe>();
-
   recipes: Recipe[] = [
     new Recipe('A Test','This is simply a test.','https://barbecuebible.com/wp-content/uploads/2013/05/featured-great-american-hamburger-1024x640.jpg',
       [new Ingredient('Bread', 1),

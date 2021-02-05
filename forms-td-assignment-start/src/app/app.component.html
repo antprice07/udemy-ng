@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- Add a Form with the following Inputs (and Validators)
+           1) Mail address (should not be empty and should be an email address)
+           2) A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")
+              Set "Advanced" as Default
+           3) A Password field (should not be empty)
+           4) A Submit Button
+
+           Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid.
+
+           Upon submitting the form, you should simply print the Value of the Form to the Console.
+           Optionally, display it in your template.
+      -->
+      <form (ngSubmit)=onSubmit() #f='ngForm'>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input class="form-control" type="text" required email name="email" ngModel #email='ngModel'>
+          <div class="help-block" *ngIf="!email.valid && email.touched">You must enter a valid email!</div>
+        </div>
+        <div class="form-group">
+          <label for="subscriptionType">Subscription</label>
+          <select id="subscription" name="subscription" [(ngModel)]="defaultSub" class="form-control">
+            <option *ngFor="let subscription of subscriptionTypes" [value]="subscription">{{subscription.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" name="password" ngModel #password="ngModel" required type="password" class="form-control">
+          <div class="help-block" *ngIf="!password.valid && password.touched">You must enter a password!</div>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Submit</button>
+      </form>
+      <div class="row" *ngIf="submitted">
+        <div class="col-xs-12">
+          <h3>Your Data</h3>
+          <p>Email: {{formData.email}}</p>
+          <p>Subscription: {{formData.subscription}}</p>
+          <p>Password: {{formData.password}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
