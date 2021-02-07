@@ -1,1 +1,26 @@
-<h3>Please select a Recipe!</h3>
+<div class="row">
+    <div class="col-xs-12">
+        <div>
+          <h3>New Recipe</h3>
+          <form [formGroup]="recipeForm" (ngSubmit)="onAddRecipe()">
+              <div>
+                <label for="recipeName">Name</label>
+                <input type="text" formControlName="name" class="form-control">
+                <label for="description">Description</label>
+                <input type="text" formControlName="description" class="form-control">
+                <label for="imagePath">Picture URL</label>
+                <input type="text" formControlName="imagePath" class="form-control">
+                <label for="ingredients">Ingredients</label>
+              </div>
+            <br>
+                <div formArrayName="ingredients">
+                    <button class="btn btn-link" (click)="onAddIngredient()" type="button">Add Ingredient</button>
+                    <div class="form-group input-group" *ngFor="let ingredientControl of Controls; let i = index">
+                        <input type="text" class="form-inline" placeholder="Name" [formControlName]='i'>
+                        <input type="number" class="form-inline" placeholder="Amount">
+                    </div>
+                </div>
+          </form>
+        </div>
+    </div>
+</div>
