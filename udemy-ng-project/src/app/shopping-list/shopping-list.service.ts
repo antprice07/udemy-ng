@@ -6,6 +6,7 @@ import { Ingredient } from '../shared/ingredient.model';
   providedIn: 'root',
 })
 export class ShoppingListService {
+  url = "https://udemy-ng-recipe-book-5d926-default-rtdb.firebaseio.com/shopping-list.json";
   ingredientsChanged = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
   private ingredients: Ingredient[] = [
