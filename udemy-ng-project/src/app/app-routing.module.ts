@@ -9,7 +9,7 @@ import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 const appRoutes: Routes = [
     {path: 'recipes', component: RecipesComponent, children: [
         {path: '', component: RecipeStartComponent},
-        {path: 'new', component: RecipeStartComponent},
+        {path: 'new', component: RecipeEditComponent},
         {path: ':id', component: RecipeDetailComponent},
         {path: ':id/edit', component: RecipeEditComponent},
     ]},
