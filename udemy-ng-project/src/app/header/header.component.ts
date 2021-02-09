@@ -1,26 +1,43 @@
-import { EventEmitter, Output } from '@angular/core';
+import { EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { RecipeService } from '../recipes/recipe.service';
 
-
 @Component({
-    selector: 'app-header',
-    templateUrl: 'header.component.html'
+  selector: 'app-header',
+  templateUrl: 'header.component.html',
 })
-export class HeaderComponent {
-    constructor(private recipeSvc: RecipeService){}
+export class HeaderComponent implements OnInit, OnDestroy {
+  private userSub: Subscription;
+  isLoggedIn = false;
+  constructor(private recipeSvc: RecipeService, private authSvc: AuthService) {}
 
-   @Output() featureSelected = new EventEmitter<string>();
+  ngOnInit() {
+    this.userSub = this.authSvc.user.subscribe((user) => {
+      //   this.isLoggedIn = !user ? false : true;
+      this.isLoggedIn = !!user;
+    });
+  }
 
-    onSelect(feature:string){
-        this.featureSelected.emit(feature);
-    }
-    onSaveData(){
-        this.recipeSvc.storeRecipes();
-    }
+  onLogout() {
+    this.authSvc.logout();
+  }
 
-    onFetchData(){
-        this.recipeSvc.fetchRecipes().subscribe();
-    }
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+  }
 
+  @Output() featureSelected = new EventEmitter<string>();
+
+  onSelect(feature: string) {
+    this.featureSelected.emit(feature);
+  }
+  onSaveData() {
+    this.recipeSvc.storeRecipes();
+  }
+
+  onFetchData() {
+    this.recipeSvc.fetchRecipes().subscribe();
+  }
 }
