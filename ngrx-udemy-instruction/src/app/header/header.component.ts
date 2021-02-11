@@ -1,8 +1,11 @@
 import { EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { RecipeService } from '../recipes/recipe.service';
+import * as fromApp from '../store/app.reducer';
 
 @Component({
   selector: 'app-header',
@@ -11,13 +14,24 @@ import { RecipeService } from '../recipes/recipe.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   private userSub: Subscription;
   isLoggedIn = false;
-  constructor(private recipeSvc: RecipeService, private authSvc: AuthService) {}
+  constructor(
+    private recipeSvc: RecipeService,
+    private authSvc: AuthService,
+    private store: Store<fromApp.AppState>
+  ) {}
 
   ngOnInit() {
-    this.userSub = this.authSvc.user.subscribe((user) => {
-      //   this.isLoggedIn = !user ? false : true;
-      this.isLoggedIn = !!user;
-    });
+    this.userSub = this.store
+      .select('auth')
+      .pipe(
+        map((authState) => {
+          return authState.user;
+        })
+      )
+      .subscribe((user) => {
+        //   this.isLoggedIn = !user ? false : true;
+        this.isLoggedIn = !!user;
+      });
   }
 
   onLogout() {
