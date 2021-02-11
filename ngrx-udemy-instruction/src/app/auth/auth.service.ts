@@ -25,7 +25,6 @@ export interface AuthResponseDate {
 export class AuthService {
   // user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
-  key = environment.firebaseAPIKey;
 
   constructor(
     private http: HttpClient,
